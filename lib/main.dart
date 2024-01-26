@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:template_dummy/app.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -12,8 +13,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var _a = 1;
+  int _b = 100;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MainApp(),
+    );
   }
 }
