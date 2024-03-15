@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:template_dummy/pages/register_page.dart';
+import '../resource/fonts.dart' as fonts_constants;
+import '../resource/images.dart' as images_constants;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,7 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  int _newValue = 0;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   void navigateToRegister() {
     Navigator.push(
@@ -19,38 +21,140 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context) => const RegisterPage(),
       ),
     );
-    setState(() {
-      _newValue = 2;
-    });
+  }
+
+  Future<void> onLogin() async {
+    final _email = emailController.text;
+    final _password = passwordController.text;
+
+    if (emailController.text.isEmpty) {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Bạn cần nhập Email!'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Approve'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    if (passwordController.text.isEmpty) {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Bạn cần nhập mật khẩu !'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Approve'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Thông tin đăng nhập'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Email $_email'),
+                Text('Password $_password'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onTap: () {},
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Login Page',
-                style: GoogleFonts.roboto(
-                  textStyle: Theme.of(context).textTheme.displayLarge,
-                  fontSize: 48,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.italic,
+        onTap: () {
+          FocusScope.of(context).requestFocus(
+            FocusNode(),
+          );
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Image(
+                  image: AssetImage(images_constants.imgLogin),
                 ),
-              ),
-              Text(
-                _newValue.toString(),
-              ),
-              TextButton(
-                onPressed: navigateToRegister,
-                child: const Text('Go to Register'),
-              ),
-            ],
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontFamily: fonts_constants.fontBold,
+                      fontSize: 24.0,
+                      color: Color.fromRGBO(54, 69, 79, 1),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Email'),
+                      TextField(
+                        decoration: InputDecoration(hintText: 'abc@email.com'),
+                        controller: emailController,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  margin: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Password'),
+                      TextField(
+                        decoration: InputDecoration(hintText: '...'),
+                        controller: passwordController,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: TextButton(
+                    onPressed: onLogin,
+                    child: Text('Login'),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

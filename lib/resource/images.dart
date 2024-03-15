@@ -1,0 +1,1 @@
+const String imgLogin = 'assets/images/img_login.png';
