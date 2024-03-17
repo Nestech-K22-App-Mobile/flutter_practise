@@ -104,6 +104,7 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
     }
+    navigateToRegister();
     // return showDialog<void>(
     //   context: context,
     //   barrierDismissible: false, // user must tap button!
