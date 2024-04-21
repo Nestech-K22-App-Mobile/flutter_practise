@@ -24,13 +24,27 @@ class _MyAppState extends State<MyApp> {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Hello World'),
-          ],
+      home: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: Colors.grey,
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0)),
+              color: Colors.white,
+            ),
+            child: Text(
+              'This is a Container',
+              textScaleFactor: 2,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
         ),
       ),
     );
